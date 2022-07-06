@@ -1,8 +1,13 @@
 import React, { Component, Suspense } from 'react'
-import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
-import { CSpinner } from '@coreui/react-pro'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
 import OneSignal from 'react-onesignal';
+
+const loading = (
+  <div className="pt-3 text-center">
+    <div className="sk-spinner sk-spinner-pulse"></div>
+  </div>
+)
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -22,7 +27,7 @@ class App extends Component {
   render() {
     return (
       <HashRouter>
-        <Suspense fallback={<CSpinner color="primary" />}>
+        <Suspense fallback={loading}>
           <Routes>
             <Route path="*" name="Home" element={<DefaultLayout />} />
           </Routes>
