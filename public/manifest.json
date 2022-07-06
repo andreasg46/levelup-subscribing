@@ -3,8 +3,8 @@
   "name": "Level Up subscribing",
   "icons": [
     {
-      "src": "./assets/img/favicon.png",
-      "sizes": "100x100",
+      "src": "./favicon.png",
+      "sizes": "256x256",
       "type": "image/png"
     }
   ],
