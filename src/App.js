@@ -3,6 +3,7 @@ import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { CSpinner } from '@coreui/react-pro'
 import './scss/style.scss'
 import OneSignal from 'react-onesignal';
+import { BrowserRouter } from 'react-router-dom';
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -21,13 +22,13 @@ class App extends Component {
 
   render() {
     return (
-      <HashRouter>
+      <BrowserRouter>
         <Suspense fallback={<CSpinner color="primary" />}>
           <Routes>
             <Route path="*" name="Home" element={<DefaultLayout />} />
           </Routes>
         </Suspense>
-      </HashRouter>
+      </BrowserRouter>
     )
   }
 }
