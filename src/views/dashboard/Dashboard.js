@@ -11,7 +11,33 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import CIcon from '@coreui/icons-react'
+import { isBrowser, isMobile } from 'react-device-detect';
 import { cilBell } from '@coreui/icons'
+
+
+function detectDeviceModel() {
+  if (isMobile) {
+    return 'Mobile';
+  } else if (isBrowser) {
+    return 'Browser';
+  }
+}
+
+function detectBrowser() {
+  if (navigator.userAgent.indexOf("Chrome") != -1) {
+    return 5;
+  } else if (navigator.userAgent.indexOf("Safari") != -1) {
+    return 7;
+  } else if (navigator.userAgent.indexOf("Firefox") != -1) {
+    return 8;
+  } else if ((navigator.userAgent.indexOf("MSIE") != -1) || (!!document.documentMode == true)) {
+    return 'IE';//crap
+  } else {
+    return 'N/A';
+  }
+}
+
+
 const Dashboard = () => {
   function Subscribe() {
     const options = {
@@ -19,7 +45,9 @@ const Dashboard = () => {
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify({
         app_id: `${process.env.REACT_APP_APP_ID}`,
-        device_type: 0,
+        device_model: detectDeviceModel(),
+        device_type: detectBrowser(),
+        identifier: '7abcd558f29d0b1f048083e2834ad8ea4b3d87d8ad9c088b33c132706ff445f0',
         tags: {
           email: 'test@gmail.com',
           status: 'active',
