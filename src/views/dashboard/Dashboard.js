@@ -25,12 +25,15 @@ const Dashboard = () => {
     OneSignal.getUserId(function (userId) {
       setUserId(userId);
     });
+    OneSignal.on('subscriptionChange', function (isSubscribed) {
+      console.log("The user's subscription state is now:", isSubscribed);
+    });
   }), [];
 
-  OneSignal.on('subscriptionChange', function (isSubscribed) {
-    console.log("The user's subscription state is now:", isSubscribed);
-  });
-
+  const handleSubmit = () => {
+    alert('Email Submitted!');
+    AddTags(userId, email)
+  }
 
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
@@ -40,10 +43,9 @@ const Dashboard = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm>
-                    <h1>Welcome to Level Up</h1>
-                    <p className="text-medium-emphasis">Please subscribe to our notifications service</p>
-
+                  <h1>Welcome to Level Up</h1>
+                  <p className="text-medium-emphasis">Please subscribe to our notifications service</p>
+                  <CForm onSubmit={handleSubmit}>
                     <CCol xs={12}>
                       <CFormLabel htmlFor="inputState">Email</CFormLabel>
                       <CFormInput placeholder="Enter your email" aria-label="Email"
@@ -51,17 +53,17 @@ const Dashboard = () => {
                     </CCol>
                     <br></br>
                     <CRow>
-                      <CCol xs={8} className='onesignal-customlink-container'></CCol>
-                      <CCol xs={2} ><CButton onClick={() => AddTags(userId, email)}>Submit email</CButton></CCol>
+                      <CCol xs={8} ><CButton type='submit'>Submit email</CButton></CCol>
                     </CRow>
                   </CForm>
                 </CCardBody>
               </CCard>
-              <CCard className="text-white bg-dark py-5" style={{ width: '34%' }}>
-                <CCardBody className="text-center">
-                  <div>
+              <CCard xs={12} className="p-4 bg-dark">
+                <CCardBody>
+                  <div className="text-center" style={{ marginTop: '30px' }}>
                     <CImage src={'favicon.png'} style={{ width: '60%' }} />
                   </div>
+                  <CCol xs={12} className='onesignal-customlink-container' ></CCol>
                 </CCardBody>
               </CCard>
             </CCardGroup>
