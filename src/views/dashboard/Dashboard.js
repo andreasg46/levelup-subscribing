@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CButton,
   CCard,
@@ -7,59 +7,30 @@ import {
   CCol,
   CContainer,
   CForm,
+  CFormInput,
+  CFormLabel,
   CImage,
   CRow,
 } from '@coreui/react-pro'
-import CIcon from '@coreui/icons-react'
-import { isBrowser, isMobile } from 'react-device-detect';
-import { cilBell } from '@coreui/icons'
-
-
-function detectDeviceModel() {
-  if (isMobile) {
-    return 'Mobile';
-  } else if (isBrowser) {
-    return 'Browser';
-  }
-}
-
-function detectBrowser() {
-  if (navigator.userAgent.indexOf("Chrome") != -1) {
-    return 5;
-  } else if (navigator.userAgent.indexOf("Safari") != -1) {
-    return 7;
-  } else if (navigator.userAgent.indexOf("Firefox") != -1) {
-    return 8;
-  } else if ((navigator.userAgent.indexOf("MSIE") != -1) || (!!document.documentMode == true)) {
-    return 'IE';//crap
-  } else {
-    return 'N/A';
-  }
-}
-
+import OneSignal from 'react-onesignal';
+import { AddTags, runOneSignal } from './OneSignal';
 
 const Dashboard = () => {
-  function Subscribe() {
-    const options = {
-      method: 'POST',
-      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        app_id: `${process.env.REACT_APP_APP_ID}`,
-        device_model: detectDeviceModel(),
-        device_type: detectBrowser(),
-        identifier: '7abcd558f29d0b1f048083e2834ad8ea4b3d87d8ad9c088b33c132706ff445f0',
-        tags: {
-          email: 'test@gmail.com',
-          status: 'active',
-        },
-      })
-    };
+  const [userId, setUserId] = useState('');
+  const [email, setEmail] = useState('');
 
-    fetch('https://onesignal.com/api/v1/players', options)
-      .then(response => response.json())
-      .then(response => console.log(response))
-      .catch(err => console.error(err));
-  }
+  useEffect(() => {
+    runOneSignal();
+
+    OneSignal.getUserId(function (userId) {
+      setUserId(userId);
+    });
+  }), [];
+
+  OneSignal.on('subscriptionChange', function (isSubscribed) {
+    console.log("The user's subscription state is now:", isSubscribed);
+  });
+
 
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
@@ -72,12 +43,16 @@ const Dashboard = () => {
                   <CForm>
                     <h1>Welcome to Level Up</h1>
                     <p className="text-medium-emphasis">Please subscribe to our notifications service</p>
+
+                    <CCol xs={12}>
+                      <CFormLabel htmlFor="inputState">Email</CFormLabel>
+                      <CFormInput placeholder="Enter your email" aria-label="Email"
+                        onChange={(e) => setEmail(e.target.value)} />
+                    </CCol>
+                    <br></br>
                     <CRow>
-                      <CCol xs={6}>
-                        <CButton color="primary" className="px-4" onClick={Subscribe}>
-                          Subscribe <CIcon icon={cilBell} />
-                        </CButton>
-                      </CCol>
+                      <CCol xs={8} className='onesignal-customlink-container'></CCol>
+                      <CCol xs={2} ><CButton onClick={() => AddTags(userId, email)}>Submit email</CButton></CCol>
                     </CRow>
                   </CForm>
                 </CCardBody>
@@ -94,6 +69,7 @@ const Dashboard = () => {
         </CRow>
       </CContainer>
     </div>
+
   )
 }
 
