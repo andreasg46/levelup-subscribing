@@ -60,7 +60,7 @@ const Dashboard = () => {
               <CCard className="text-white bg-dark py-5" style={{ width: '34%' }}>
                 <CCardBody className="text-center">
                   <div>
-                    <CImage src={'favicon.png'} style={{ width: '50%' }} />
+                    <CImage src={'favicon.png'} style={{ width: '60%' }} />
                   </div>
                 </CCardBody>
               </CCard>
