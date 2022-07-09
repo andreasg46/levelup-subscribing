@@ -4,6 +4,7 @@
   },
   "include": [
     "src",
-    "OneSignalSDKWorker.js"
+    "OneSignalSDKWorker.js",
+    "public/onesignal"
   ]
 }
