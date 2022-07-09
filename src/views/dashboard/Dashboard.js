@@ -13,14 +13,14 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import OneSignal from 'react-onesignal';
-import { AddTags, runOneSignal } from './OneSignal';
+import { AddTags } from './OneSignal';
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [userId, setUserId] = useState('');
   const [email, setEmail] = useState('');
 
-
-  runOneSignal();
+  let navigate = useNavigate();
 
   OneSignal.getUserId(function (userId) {
     setUserId(userId);
@@ -28,11 +28,16 @@ const Dashboard = () => {
 
   OneSignal.on('subscriptionChange', function (isSubscribed) {
     console.log("The user's subscription state is now:", isSubscribed);
+
+    (isSubscribed) ? navigate("/landing") : false;
   });
 
-  const handleSubmit = () => {
+  async function handleSubmit(event) {
+
     alert('Email Submitted!');
-    AddTags(userId, email)
+    event.preventDefault();
+    await AddTags(userId, email);
+    navigate("/landing");
   }
 
   return (
