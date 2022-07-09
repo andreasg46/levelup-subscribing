@@ -1,7 +1,8 @@
 import React, { Component, Suspense } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
-import { runOneSignal } from './views/dashboard/OneSignal'
+import OneSignal from 'react-onesignal';
+
 
 const loading = (
   <div className="pt-3 text-center">
@@ -12,7 +13,10 @@ const loading = (
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 
-runOneSignal();
+useEffect(() => {
+  OneSignal.init({ appId: 'cca1bd1f-8df1-47e4-a28e-454eeb0b5ab3', allowLocalhostAsSecureOrigin: true });
+  OneSignal.showSlidedownPrompt();
+}, []);
 
 class App extends Component {
   render() {

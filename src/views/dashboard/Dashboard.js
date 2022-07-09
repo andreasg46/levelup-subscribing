@@ -16,6 +16,10 @@ import OneSignal from 'react-onesignal';
 import { AddTags } from './OneSignal';
 import { useNavigate } from "react-router-dom";
 
+OneSignal.on('subscriptionChange', function (isSubscribed) {
+  console.log("The user's subscription state is now:", isSubscribed);
+});
+
 const Dashboard = () => {
   let navigate = useNavigate();
 

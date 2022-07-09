@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
   CCard,
   CCardBody,
@@ -6,6 +6,11 @@ import {
   CContainer,
   CRow,
 } from '@coreui/react-pro'
+import OneSignal from 'react-onesignal';
+
+OneSignal.on('subscriptionChange', function (isSubscribed) {
+  console.log("The user's subscription state is now:", isSubscribed);
+});
 
 const Landing = () => {
   return (
