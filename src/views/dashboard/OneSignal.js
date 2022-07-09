@@ -5,7 +5,7 @@ export async function runOneSignal() {
   // OneSignal.showSlidedownPrompt();
 }
 
-export function AddTags(userId, email) {
+export async function AddTags(userId, email) {
   const options = {
     method: 'PUT',
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
