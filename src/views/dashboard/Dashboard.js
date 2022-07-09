@@ -19,16 +19,16 @@ const Dashboard = () => {
   const [userId, setUserId] = useState('');
   const [email, setEmail] = useState('');
 
-  useEffect(() => {
-    runOneSignal();
 
-    OneSignal.getUserId(function (userId) {
-      setUserId(userId);
-    });
-    OneSignal.on('subscriptionChange', function (isSubscribed) {
-      console.log("The user's subscription state is now:", isSubscribed);
-    });
-  }), [];
+  runOneSignal();
+
+  OneSignal.getUserId(function (userId) {
+    setUserId(userId);
+  });
+
+  OneSignal.on('subscriptionChange', function (isSubscribed) {
+    console.log("The user's subscription state is now:", isSubscribed);
+  });
 
   const handleSubmit = () => {
     alert('Email Submitted!');
