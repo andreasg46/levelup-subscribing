@@ -6,7 +6,6 @@ export async function runOneSignal() {
 
   OneSignal.on('subscriptionChange', function (isSubscribed) {
     console.log("The user's subscription state is now:", isSubscribed);
-    //location.reload(false);
   });
 }
 

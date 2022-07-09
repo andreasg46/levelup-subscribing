@@ -6,10 +6,6 @@ import App from './App'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { Provider } from 'react-redux'
 import store from './store'
-import { runOneSignal } from './views/dashboard/OneSignal'
-
-
-runOneSignal();
 
 ReactDOM.render(
   <Provider store={store}>
