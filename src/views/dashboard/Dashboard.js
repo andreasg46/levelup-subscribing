@@ -29,7 +29,7 @@ const Dashboard = () => {
   OneSignal.on('subscriptionChange', function (isSubscribed) {
     console.log("The user's subscription state is now:", isSubscribed);
 
-    (isSubscribed) ? navigate("/landing") : false;
+    (isSubscribed) ? location.href = '/landing' : false;
   });
 
   async function handleSubmit(event) {
@@ -68,7 +68,6 @@ const Dashboard = () => {
                   <div className="text-center" style={{ marginTop: '30px' }}>
                     <CImage src={'favicon.png'} style={{ width: '60%' }} />
                   </div>
-                  <CCol xs={12} className='onesignal-customlink-container' ></CCol>
                 </CCardBody>
               </CCard>
             </CCardGroup>
