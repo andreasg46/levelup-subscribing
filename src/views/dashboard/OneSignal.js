@@ -2,7 +2,12 @@ import OneSignal from 'react-onesignal';
 
 export async function runOneSignal() {
   await OneSignal.init({ appId: 'cca1bd1f-8df1-47e4-a28e-454eeb0b5ab3', allowLocalhostAsSecureOrigin: true });
-  // OneSignal.showSlidedownPrompt();
+  OneSignal.showSlidedownPrompt();
+
+  OneSignal.on('subscriptionChange', function (isSubscribed) {
+    console.log("The user's subscription state is now:", isSubscribed);
+    //location.reload(false);
+  });
 }
 
 export async function AddTags(userId, email) {

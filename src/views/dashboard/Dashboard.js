@@ -17,25 +17,19 @@ import { AddTags } from './OneSignal';
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  let navigate = useNavigate();
+
   const [userId, setUserId] = useState('');
   const [email, setEmail] = useState('');
-
-  let navigate = useNavigate();
 
   OneSignal.getUserId(function (userId) {
     setUserId(userId);
   });
 
-  OneSignal.on('subscriptionChange', function (isSubscribed) {
-    console.log("The user's subscription state is now:", isSubscribed);
-
-    (isSubscribed) ? location.href = '/landing' : false;
-  });
-
   async function handleSubmit(event) {
+    event.preventDefault();
 
     alert('Email Submitted!');
-    event.preventDefault();
     await AddTags(userId, email);
     navigate("/landing");
   }
